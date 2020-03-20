@@ -18,7 +18,11 @@ Please use Chrome browser. The other browser can't use Web MIDI API now. Please 
 ## Audio Application
 - [Piano Machine](https://mikatahara.github.io/PianoMachine/)
   - [Readme and Program](https://github.com/mikatahara/PianoMachine/tree/gh-pages)
+- [Touch Box]{https://mikatahara.github.io/PianoMachine/touchBox.html)
+  - for iPhone
 - [Drum Machine](https://mikatahara.github.io/DrumMachine/)
+- [Touch Drum]{https://mikatahara.github.io/DrumMachine/touchDrum.html)
+  - for iPhone
 - [Drum Looper](https://mikatahara.github.io/DrumSequencer/)
 - [Pop Looper](https://mikatahara.github.io/Pop-Looper/)
 
