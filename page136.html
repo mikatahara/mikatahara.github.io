@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta name="Keywords" content="webMIDIAPI,WebMidiApi,webmidiapi">
+	<script type="text/javascript" src="myAudioClass.js"></script>
+	<script type="text/javascript" src="mySamplerGUI.js"></script>
+	<script type="text/javascript" src="myWavesample.js"></script>
+	<script src="https://mikatahara.github.io/drawgraph.js" type="text/javascript"></script>
+	<title>Mic to SP</title>
+
+  <style type="text/css">
+    <!--
+    #sans { color: black; font-family:sans-serif ;  font-size: 10pt; line-height : 1.5em}
+    #mono { color: black; font-family:monospace ; font-size: 10pt; line-height : 1.5em}
+    -->
+    </style>
+</HEAD>
+
+<body bgcolor="#dddddd" text="#222222" link="#0000ff" vlink="#ff00ff" alink="#ff0000" 
+	style="margin-right:28px;margin-left:28px;margin-top:20px;">
+<br>
+
+<pre id="log">
+</pre>
+<!--	-------------------------------------------------------------------- -->
+<form id="button">
+<input type="button" value="Rec0" onclick="audioOn(0)">
+<input type="button" value="Rec1" onclick="audioOn(1)">
+<input type="button" value="Rec2" onclick="audioOn(2)">
+<input type="button" value="Rec3" onclick="audioOn(3)">
+<input type="button" value="Stop" onclick="audioOff()">
+</form>
+
+<!--	
+<form method="volume">
+LEFT &nbsp;&nbsp;GAIN: <input type="number" name="left"  step="0.1" min="0.0" max="1.0" value="1.0" onchange="leftGainChange(this.value);"><br>
+RIGHT GAIN: <input type="number" name="right" step="0.1" min="0.0" max="1.0" value="1.0" onchange="RightGainChange(this.value);">
+</form>
+------------------------------------------------------------------ -->
+
+<style type="text/css">
+#cgui {
+	position:absolute; top:20px; left:20px;
+}
+
+#waveshape0 {
+	position:absolute; top:20px; left:480px;
+}
+#waveshape1 {
+	position:absolute; top:140px; left:480px;
+}
+#waveshape2 {
+	position:absolute; top:260px; left:480px;
+}
+#waveshape3 {
+	position:absolute; top:380px; left:480px;
+}
+
+#button {
+	position:absolute; top:450px; left:20px;
+}
+
+#log {
+	position:absolute; top:500px; left:20px;
+	width:20em;
+	height:12em;
+	margin:.5em 0 .5em 0;
+	padding:.5em;
+	background-color:#dddddd;
+	border:solid 1px #222222;
+	white-space:pre;
+	font-family:Courier New, monospace;
+	font-size:.75em;
+	overflow:auto;
+}
+</style>
+
+<!--	-------------------------------------------------------------------- -->
+<canvas id="cgui" width="400" height="400"></canvas>
+<canvas id="waveshape0" width="600" height="100"></canvas>
+<canvas id="waveshape1" width="600" height="100"></canvas>
+<canvas id="waveshape2" width="600" height="100"></canvas>
+<canvas id="waveshape3" width="600" height="100"></canvas>
+
+
+</body>
+</html>
+

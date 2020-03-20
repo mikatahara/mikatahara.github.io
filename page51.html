@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<script type="text/javascript" src="drawgraph.js"></script>
+	<title>Video Check</title>
+
+<!--	------------------------------------------------------------------	-->
+<style type="text/css">
+    <!--
+    #sans { color: black; font-family:sans-serif ;  font-size: 10pt; line-height : 1.5em}
+    #mono { color: black; font-family:monospace ; font-size: 10pt; line-height : 1.5em}
+    #monb { color: blue; font-family:monospace ; font-size: 10pt; line-height : 1.5em}
+
+    #log {
+     width:20em; height:12em; margin:.5em 0 .5em 0; padding:.5em; background-color:#eee;
+     border:solid 1px #888; white-space:pre; font-family:Courier New, monospace; font-size:.75em;
+     overflow:auto;
+    }
+    -->
+</style>
+
+</head>
+<body bgcolor="#ccccff" text="#000000" link="#0000ff" vlink="#ff00ff" 
+alink="#ff0000" style="margin-right:28px;margin-left:28px;margin-top:20px;">
+<center><h2>Web MIDI API 実験室<h2></center>
+<center><h4>Study about Video through getUserMedia</h4></center>
+
+<video id="myVideo" autoplay></video>
+
+<pre id="mono">
+{
+	navigator.getUserMedia = ( navigator.getUserMedia ||
+		navigator.webkitGetUserMedia ||
+		navigator.mozGetUserMedia ||
+		navigator.msGetUserMedia);
+
+	function soundThrough() {
+		navigator.getUserMedia({ video: true },
+
+		function(stream){
+			var video = document.querySelector('video#myVideo');
+			video.src = window.URL.createObjectURL(stream);
+			video.onloadedmetadata = function(e) {
+				video.play();
+			};
+
+		},
+
+		function(e) {
+			console.log(e);
+		}
+		);
+	}
+
+
+	soundThrough();
+}
+</pre>
+
+</body>
+<script>
+{
+	navigator.getUserMedia = ( navigator.getUserMedia ||
+		navigator.webkitGetUserMedia ||
+		navigator.mozGetUserMedia ||
+		navigator.msGetUserMedia);
+
+	function soundThrough() {
+		navigator.getUserMedia({ video: true },
+
+		function(stream){
+			var video = document.querySelector('video#myVideo');
+			video.src = window.URL.createObjectURL(stream);
+			localMediaStream = stream;
+			video.onloadedmetadata = function(e) {
+				video.play();
+			};
+
+		},
+
+		function(e) {
+			console.log(e);
+		}
+		);
+	}
+
+
+	soundThrough();
+}
+
+</script>
+
+</html>
