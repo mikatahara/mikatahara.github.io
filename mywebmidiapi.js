@@ -11,14 +11,10 @@
 	var output_device=0;
 	var log=null;
 
-	var time_interval=0;
 	var timerId=null;
 	var input_menu_id=null;
 	var output_menu_id=null;
 	var notes=[0x28, 0x2a, 0x2c, 0x2d, 0x2f, 0x31, 0x33, 0x34];
-
-	var note_on_num=-1;			//Just sound note number
-	var no_midi_interface=0;	//MIDI Interfaceが無かったら 1 になる。
 
 	function runTest()
 	{
@@ -188,7 +184,7 @@
 
 	function inputDeviceSelect(item){
 
-		for(i=0; i<inputs.length; i++){
+		for(var i=0; i<inputs.length; i++){
 			inputs[i].onmidimessage = handleMIDIMessage0;
 		}
 
