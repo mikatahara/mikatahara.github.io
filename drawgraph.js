@@ -89,6 +89,7 @@ function DrawGraph(iWxs,iWxe,iWys,iWye){
 
 	this.mcX = 0;	/* mouse axis */
 	this.mcY = 0;	/* mouse axis */
+	this.mMf = 0;	/* mouse flag 1:Down 0:Up */
 
 	this.tmp=0;
 }
@@ -203,6 +204,7 @@ DrawGraph.prototype={
 		this.mcX = mouseX;
 		this.mcY = mouseY;
 		this.fConvVPos(this.mcX,this.mcY);	//Viewport座標に変換
+		this.mMf=1;
 		goAnimation();
 	},
 
@@ -225,6 +227,7 @@ DrawGraph.prototype={
 		this.mcX = mouseX;
 		this.mcY = mouseY;
 		this.fConvVPos(this.mcX,this.mcY);	//Viewport座標に変換
+		this.mMf=0;
 		goMouseUp();
 	},
 
@@ -233,6 +236,8 @@ DrawGraph.prototype={
 	/*	Mouseの座標は、mcX, mcYに保存				*/
 	/* *******************************************	*/
 	fMouseMove: function(e){
+		if(this.mMf==0) return;
+
 		var mouseX,mouseY;
 		var rect = e.target.getBoundingClientRect();
 		mouseX = e.clientX-rect.left;
