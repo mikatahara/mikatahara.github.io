@@ -250,7 +250,7 @@ DrawGraph.prototype={
 		this.mcX = mouseX;
 		this.mcY = mouseY;
 		this.fConvVPos(this.mcX,this.mcY);	//Viewport座標に変換
-		fMouseMove();
+		goMouseMove();
 	},
 
 	/* *******************************************	*/
@@ -456,3 +456,7 @@ DrawGraph.prototype={
 	},
 
 }
+
+function goAnimation(){}
+function goMouseUp(){}
+function goMouseMove(){}
