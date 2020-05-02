@@ -103,7 +103,7 @@ DrawGraph.prototype={
 //		this.cv.addEventListener('click', this.fMouseClick.bind(this),false);
 		this.cv.addEventListener('mousedown', this.fMouseClick.bind(this),false);
 		this.cv.addEventListener('mouseup', this.fMouseUp.bind(this),false);
-
+		this.cv.addEventListener('mousemove', this.fMouseMove.bind(this),false);
 	},
 
 	fSetCanvasX : function(canvas) {
@@ -112,6 +112,7 @@ DrawGraph.prototype={
 //		this.cv.addEventListener('click', this.fMouseClick.bind(this),false);
 		this.cv.addEventListener('mousedown', this.fMouseClick.bind(this),false);
 		this.cv.addEventListener('mouseup', this.fMouseUp.bind(this),false);
+		this.cv.addEventListener('mousemove', this.fMouseMove.bind(this),false);
 
 		this.iWxs=0;
 		this.iWxe=this.cv.clientWidth;
@@ -221,11 +222,30 @@ DrawGraph.prototype={
 		mouseX=Math.floor(mouseX);
 		mouseY=Math.floor(mouseY);
 
-		log.innerText += "x:"+mouseX+" y:"+mouseY;
-		log.innerText += "\n";
 		this.mcX = mouseX;
 		this.mcY = mouseY;
+		this.fConvVPos(this.mcX,this.mcY);	//Viewport座標に変換
 		goMouseUp();
+	},
+
+	/* *******************************************	*/
+	/*	Mouseをドラッグした位置の座標を表示			*/
+	/*	Mouseの座標は、mcX, mcYに保存				*/
+	/* *******************************************	*/
+	fMouseMove: function(e){
+		var mouseX,mouseY;
+		var rect = e.target.getBoundingClientRect();
+		mouseX = e.clientX-rect.left;
+		mouseY = e.clientY-rect.top;
+		mouseX*=this.cv.width/this.cv.clientWidth
+		mouseY*=this.cv.height/this.cv.clientHeight;
+		mouseX=Math.floor(mouseX);
+		mouseY=Math.floor(mouseY);
+
+		this.mcX = mouseX;
+		this.mcY = mouseY;
+		this.fConvVPos(this.mcX,this.mcY);	//Viewport座標に変換
+		fMouseMove();
 	},
 
 	/* *******************************************	*/
