@@ -6,14 +6,28 @@ Please use Chrome browser. The other browser can't use Web MIDI API now. Please 
 
 ## MIDI Tools
 - [MIDI Monitor](https://mikatahara.github.io/MidiMonitor/)
+  
   - [Readme and Program](https://github.com/mikatahara/MidiMonitor/tree/gh-pages)
+  
 - [MIDI Patchbay](https://mikatahara.github.io/MIDI-patchbay/)
+  
   - [Readme and Program](https://github.com/mikatahara/MIDI-patchbay/tree/gh-pages)
+  
 - [MIDI Send & Receive](https://mikatahara.github.io/SendReceive/)
+  
   - [Readme and Program](https://github.com/mikatahara/SendReceive/tree/gh-pages)
+  
 - [SMF Player](https://mikatahara.github.io/SmfPlayer/)
+
 - [Reface DX Editor](https://mikatahara.github.io/RefaceDX/)
+
 - [Control Change Monitor](https://mikatahara.github.io/ControlChangeMonitor/)
+
+- [NRPN-COntroller](https://mikatahara.github.io/NRPN-COntroller/)
+
+  - [Usage](https://github.com/mikatahara/NRPN-controller)
+
+    
 
 ## Audio Application
 - [Piano Machine](https://mikatahara.github.io/PianoMachine/)
