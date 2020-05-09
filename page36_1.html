@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta name="Keywords" content="webMIDIAPI,WebMidiApi,webmidiapi">
+	<script src="https://code.jquery.com/jquery-1.11.2.js"></script>
+	<script src="https://mikatahara.github.io/drawgraph.js"></script>
+	<script src="https://mikatahara.github.io/page36.js"></script>
+
+	<title>Usage of getUserMedia</title>
+
+  <style type="text/css">
+    <!--
+	#cbody{
+          background-color: #ffffff;
+          color : "#000000;
+          margin-right:28px;
+          margin-left:28px;
+          margin-top:20px;
+          auto;
+          -webkit-text-size-adjust: 100%;
+    }
+
+    a:link 		{ color: #4040ff; }
+    a:visited	{ color: #ff0000; }
+    a:hover		{ color: #0000ff; }
+    a:active	{ color: #ff8000; }
+
+	.sans { color: #222222; font-family:sans-serif ; font-size: 10pt; line-height : 1.5em}
+	.mono { color: #222222; font-family:monospace ; font-size: 10pt; line-height : 1.5em}
+
+    #log {
+     width:20em;
+     height:12em;
+     margin:.5em 0 .5em 0;
+     padding:.5em;
+     background-color:#eee;
+     border:solid 1px #888;
+//     background-color:#222222;
+//     border:solid 1px #222222;
+     white-space:pre;
+     font-family:Courier New, monospace;
+     font-size:.75em;
+     overflow:auto;
+    }
+    -->
+    </style>
+
+
+<hr>
+</HEAD>
+
+<body onload="soundThrough();" bgcolor="#ccccff" text="#000000" link="#0000ff" vlink="#ff00ff" alink="#ff0000" style="margin-right:28px;margin-left:28px;margin-top:20px;">
+<br>
+<center><h2>Web MIDI API 実験室<h2></center>
+<center><h4>getUserMediaで音をマイクの音を、スピーカから再生</h4>
+<div id="sans">
+<font color="red">このプログラムはスピーカボリュームが大きいとハウリングします</font><br>
+(2015.4.29)波形の形状を表示<br>
+(2016.1.9)httpsのサーバへ移動/UTF-8に変更</center>
+</div>
+<br>
+
+<!--	-------------------------------------------------------------------- -->
+<canvas id="waveshape" width="1048" height="224">
+</canvas>
+
+<pre id="log">
+</pre>
+
+<!--	------------------------------------------------------------------ -->
+
+<form method="volume">
+LEFT &nbsp;&nbsp;GAIN: <input type="number" name="left"  step="0.1" min="0.0" max="1.0" value="1.0" onchange="leftGainChange(this.value);"><br>
+RIGHT GAIN: <input type="number" name="right" step="0.1" min="0.0" max="1.0" value="1.0" onchange="RightGainChange(this.value);">
+</form>
+
+<div id="sans">
+<br>
+マイクの音を、getUserMediaで取り込む、Audio APIでちっとした加工をして、スピーカーから音を鳴らす。<br>
+この実験では、ステレオの音の左右を、splitterで分解する。<br>
+分解した音、それぞれに音の大きさを調整する。Gainノードを使う。<br>
+左右、独立にボリューム調整した後、mergerノードで、もう一度左右を結合する。<br>
+結合した音を、スピーカから出力する。<br>
+<br>
+<b>やっかいなポイント</b><br>
+
+<font color="red">
+getUserMediaは、ローカルでは使えない。<br>
+getUserMediaを使ったファイル、xxxx.htmlを外のサーバにおいてhttp://...../xxxx.html として開かないと、ちゃんと動かない。<br>
+</font>
+
+</div>
+<pre id="mono">
+{
+	var audioContext = new AudioContext(); &nbsp;&nbsp;<font color="blue">//Audio Api を立ち上げる
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;webkitAudioContext()は古い！と怒られる</font>
+	var splitter = audioContext.createChannelSplitter(2); &nbsp;&nbsp;<font color="blue">//2ch のスプリッター、ステレオを２つのモノラルにする</font>
+	var merger = audioContext.createChannelMerger(2); &nbsp;&nbsp;<font color="blue">//2ch のマージャー、２つのモノラルをステレオにする</font>
+	var node = audioContext.createScriptProcessor(1024, 2, 2); &nbsp;&nbsp;<font color="blue">//オーディオデータを直接扱うためのnodeの定義
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;バッファーサイズを1024, 入力チャンネル数を２、出力チャンネル数を２とする</font>
+	node.onaudioprocess=process;&nbsp;&nbsp;<font color="blue">//バッファーが一杯になったらこの関数へ飛ぶ</font>
+	var audiosource;
+
+	// Gain Node for both channel
+ 	var gainL = audioContext.createGain(); &nbsp;&nbsp;<font color="blue">//左チャンネル用のボリューム</font>
+	var gainR = audioContext.createGain(); &nbsp;&nbsp;<font color="blue">//右チャンネル用のボリューム</font>
+	gainL.gain.value = 0.0;&nbsp;&nbsp;<font color="blue">//左ボリュームをゼロ</font><font color="red"><b>&nbsp;gainL.value=0.0 ではダメ！</b></font>
+	gainR.gain.value = 0.0;&nbsp;&nbsp;<font color="blue">//右ボリュームをゼロ</font>
+
+	navigator.getUserMedia = ( navigator.getUserMedia ||
+		navigator.webkitGetUserMedia ||
+		navigator.mozGetUserMedia ||
+		navigator.msGetUserMedia);&nbsp;&nbsp;<font color="blue">//おまじない。この行が無いと、getUserMediaが評価されない</font>
+
+	function soundThrough() {
+		navigator.getUserMedia({video: false, audio: true},&nbsp;&nbsp;<font color="blue">//getUserMediaを呼び出します。ここではaudioだけ使います</font>
+
+		function(stream){&nbsp;&nbsp;<font color="blue">//getUserMediaの呼び出しに成功したら、この関数が呼ばれます</font>
+			audiosource = audioContext.createMediaStreamSource(stream);&nbsp;&nbsp;<font color="blue">//getUserMediaで受け取った音(stream)を、audiosourceにつなぐ</font>
+			<s>audiosource.connect(splitter); &nbsp;&nbsp;<font color="blue">//audiosourceを、スプリッターにつなぐ</font></s>
+			audiosource.connect(node); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="blue">//audiosourceを、オーディオ処理nodeにつなぐ</font>
+			node.connect(splitter); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="blue">//nodeの出力を、splitterにつなぐ</font>
+			splitter.connect(gainL, 0); &nbsp;&nbsp;&nbsp;&nbsp;<font color="blue">//スプリッターのゼロ番目の出力をgainLにつなぐ</font>
+			splitter.connect(gainR, 1); &nbsp;&nbsp;&nbsp;&nbsp;<font color="blue">//スプリッターのイチ番目の出力をgainRにつなぐ</font>
+			gainL.connect(merger, 0, 0); &nbsp;&nbsp;&nbsp;<font color="blue">//gainLのゼロ番目の出力をmergerのゼロ番目の入力につなぐ</font>
+			gainR.connect(merger, 0, 1); &nbsp;&nbsp;&nbsp;<font color="blue">//gainRのゼロ番目の出力をmergerのイチ番目の入力につなぐ</font>
+			merger.connect(audioContext.destination);&nbsp;&nbsp;<font color="blue">//mergerの出力をスピーカにつなぐ</font>
+		},
+
+		function(e) {	;&nbsp;&nbsp;<font color="blue">//getUserMediaの呼び出しに<font color="red">失敗</font>したら、この関数が呼ばれます</font>
+			console.log(e);
+		}
+	);
+
+}
+</pre>
+</body>
+</html>
+
