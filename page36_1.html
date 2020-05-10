@@ -6,7 +6,7 @@
 	<meta name="Keywords" content="webMIDIAPI,WebMidiApi,webmidiapi">
 	<script src="https://code.jquery.com/jquery-1.11.2.js"></script>
 	<script src="https://mikatahara.github.io/drawgraph.js"></script>
-	<script src="https://mikatahara.github.io/page36.js"></script>
+	<script src="page36.js"></script>
 
 	<title>Usage of getUserMedia</title>
 
@@ -30,68 +30,64 @@
 	.sans { color: #222222; font-family:sans-serif ; font-size: 10pt; line-height : 1.5em}
 	.mono { color: #222222; font-family:monospace ; font-size: 10pt; line-height : 1.5em}
 
-    #log {
-     width:20em;
-     height:12em;
-     margin:.5em 0 .5em 0;
-     padding:.5em;
-     background-color:#eee;
-     border:solid 1px #888;
-//     background-color:#222222;
-//     border:solid 1px #222222;
-     white-space:pre;
-     font-family:Courier New, monospace;
-     font-size:.75em;
-     overflow:auto;
+     #mono { 
+        color: #222222; font-family:monospace ; font-size: 10pt; line-height : 1.5em;
+        background-color: #f4f4f4;
+      }
+      
+    #log{
+        color: #808080; font-family:monospace ; font-size: 10pt; line-height : 1.5em;
+        background-color: #00ffff;
     }
+
+	#waveshapeL{
+        background-color: #00ffff;
+	}
+	#waveshapeR{
+        background-color: #ffff00;
+	}
+
     -->
     </style>
 
-
-<hr>
 </HEAD>
 
-<body onload="soundThrough();" bgcolor="#ccccff" text="#000000" link="#0000ff" vlink="#ff00ff" alink="#ff0000" style="margin-right:28px;margin-left:28px;margin-top:20px;">
+<body id="cbody">
 <br>
-<center><h2>Web MIDI API 実験室<h2></center>
-<center><h4>getUserMediaで音をマイクの音を、スピーカから再生</h4>
-<div id="sans">
+<div class="sans">
+    <h2>Web MIDI API 実験室</h2>
+<h4>getUserMediaで音をマイクの音を、スピーカから再生</h4>
 <font color="red">このプログラムはスピーカボリュームが大きいとハウリングします</font><br>
 (2015.4.29)波形の形状を表示<br>
-(2016.1.9)httpsのサーバへ移動/UTF-8に変更</center>
+(2016.1.9)httpsのサーバへ移動/UTF-8に変更
 </div>
-<br>
+<input type="button" value="MIC ON" id="mic_on">
+<br><br>
 
 <!--	-------------------------------------------------------------------- -->
-<canvas id="waveshape" width="1048" height="224">
-</canvas>
-
-<pre id="log">
-</pre>
+<canvas id="waveshapeL" width="1048" height="120"></canvas>
+<canvas id="waveshapeR" width="1048" height="120"></canvas>
 
 <!--	------------------------------------------------------------------ -->
 
+<div class="sans">
 <form method="volume">
-LEFT &nbsp;&nbsp;GAIN: <input type="number" name="left"  step="0.1" min="0.0" max="1.0" value="1.0" onchange="leftGainChange(this.value);"><br>
-RIGHT GAIN: <input type="number" name="right" step="0.1" min="0.0" max="1.0" value="1.0" onchange="RightGainChange(this.value);">
+LEFT &nbsp;&nbsp;GAIN: 
+    <input type="number" name="left"  step="0.1" min="0.0" max="1.0" value="1.0" onchange="leftGainChange(this.value);">
+RIGHT GAIN: 
+    <input type="number" name="right" step="0.1" min="0.0" max="1.0" value="1.0" onchange="RightGainChange(this.value);">
 </form>
-
-<div id="sans">
-<br>
-マイクの音を、getUserMediaで取り込む、Audio APIでちっとした加工をして、スピーカーから音を鳴らす。<br>
-この実験では、ステレオの音の左右を、splitterで分解する。<br>
-分解した音、それぞれに音の大きさを調整する。Gainノードを使う。<br>
-左右、独立にボリューム調整した後、mergerノードで、もう一度左右を結合する。<br>
-結合した音を、スピーカから出力する。<br>
-<br>
-<b>やっかいなポイント</b><br>
-
-<font color="red">
-getUserMediaは、ローカルでは使えない。<br>
-getUserMediaを使ったファイル、xxxx.htmlを外のサーバにおいてhttp://...../xxxx.html として開かないと、ちゃんと動かない。<br>
-</font>
-
 </div>
+
+<div class="sans">
+<br>
+マイクの音を、getUserMediaで取り込み、Audio APIでちっとした加工をして、スピーカーから音を鳴らします。この実験では、ステレオの音の左右を、splitterで分解する。分解した音、それぞれに音の大きさ（ボリューム）を調整するために、Gainノードを使います。左右、独立にボリューム調整した後、mergerノードで、もう一度左右を結合します。結合した音を、スピーカから出力します。<br>
+<br>
+<h4>注意</h4>
+getUserMediaは、ローカルでは使えません。getUserMediaを使ったファイル、xxxx.htmlを外のサーバにおいてhttp://...../xxxx.html として開かないと、ちゃんと動きません。<br>
+<h4>Web Audio APIのプログラム</h4>
+</div>
+
 <pre id="mono">
 {
 	var audioContext = new AudioContext(); &nbsp;&nbsp;<font color="blue">//Audio Api を立ち上げる
@@ -136,6 +132,9 @@ getUserMediaを使ったファイル、xxxx.htmlを外のサーバにおいてht
 
 }
 </pre>
+    <br><br>
+
+<pre id="log">aaa</pre>
 </body>
 </html>
 

@@ -1,95 +1,76 @@
-{
-	var audioContext = new AudioContext();
-	var audiosource;
-	var splitter = audioContext.createChannelSplitter(2);
-	var merger = audioContext.createChannelMerger(2);
-	var node = audioContext.createScriptProcessor(1024, 2, 2);
+ï»¿
+var fdgL=null;
+var fdgR=null;
+var log=null;
 
-	// Gain Node for both channel
- 	var gainL = audioContext.createGain();
-	var gainR = audioContext.createGain();
-	gainL.gain.value = 1.0;
-	gainR.gain.value = 1.0;
+// constraints
+var mConstraints = {
+	video: false,
+	audio: { echoCancellation: false }  // ã‚¨ã‚³ãƒ¼ã‚­ãƒ£ãƒ³ã‚»ãƒ©ç„¡åŠ¹åŒ–
+};
 
-	navigator.getUserMedia = ( navigator.getUserMedia ||
-		navigator.webkitGetUserMedia ||
-		navigator.mozGetUserMedia ||
-		navigator.msGetUserMedia);
-
-	function soundThrough() {
-		navigator.getUserMedia({video: false, audio: true},
-
-		function(stream){
-			audiosource = audioContext.createMediaStreamSource(stream);
-			audiosource.connect(node);
-			node.connect(splitter);
-			splitter.connect(gainL, 0);
-			splitter.connect(gainR, 1);
-			gainL.connect(merger, 0, 0)
-			gainR.connect(merger, 0, 1)
-			merger.connect(audioContext.destination);
-		},
-
-		function(e) {	// I can't use getUserMedia
-			console.log(e);
-		}
-	);
+// constraints (Chrome)
+if (window.chrome) {
+	mConstraints = {
+		video: false,
+		audio: {mandatory: {echoCancellation : false, googEchoCancellation: false}}  
+	};
 }
 
+window.onload = function() {
+    fdgL = new DrawGraph(0,1024,0,120);
+	fdgL.fSetCanvas(document.getElementById("waveshapeL"));
+//    fdgL.fResizeX();
+	fdgL.cv.width = window.innerWidth;
+    var w0=fdgL.cv.width;
+	var wh=Math.floor(w0*0.8);
+	var ws=Math.floor(w0*0.1);
+    fdgL.fSetWindowXY(ws,wh,0,120);
+    fdgL.fStrokeRect();
+	fdgL.fSetViewPort(0,127,-1,1);
+
+    fdgR = new DrawGraph(0,1024,0,120);
+	fdgR.fSetCanvas(document.getElementById("waveshapeR"));
+ //   fdgR.fResizeX();
+	fdgR.cv.width = window.innerWidth;
+    fdgR.fSetWindowXY(ws,wh,0,120);
+    fdgR.fStrokeRect();
+	fdgR.fSetViewPort(0,127,-1,1);
+
+	$('#mic_on').click(function(){
+		startAudioContext();
+	});
+
+	log = document.getElementById("log");
+};
+
+var audioContext	= null;
+var audiosource		= null;
+var splitter  	= null;
+var merger 		= null;
+var node 		= null
+var gainL	= null;
+var gainR	= null;
+
+function startAudioContext()
 {
-	var ixb = 12;	//•`‰æX²‚ÌŠî“_
-	var iyb = 12;	//•`‰æY²‚ÌŠî“_
-	var ixw = 1024;	//•`‰æ‚ÌX²‚ÌƒTƒCƒY
-	var iyw = 200;	//•`‰æ‚ÌX²‚ÌƒTƒCƒY
+	audioContext	= new AudioContext();
+	splitter		= audioContext.createChannelSplitter(2);
+	merger			= audioContext.createChannelMerger(2);
+	node			= audioContext.createScriptProcessor(1024, 2, 2);
 
-	/* •`‰æ—Ìˆæ‚Ì‰Šú‰» */
-	var canvas = document.getElementById('waveshape');
-	var waveshape = canvas.getContext('2d');
-    waveshape.strokeRect(ixb,iyb,ixw,iyw);
+	gainL = audioContext.createGain();
+	gainR = audioContext.createGain();
+	gainL.gain.value = 0.1;
+	gainR.gain.value = 0.1;
 
-	/* Audio Buffer ‚ªˆê”t‚É‚È‚Á‚½‚ç‚±‚ÌŠÖ”‚ªŒÄ‚Î‚ê‚é */
-	function process(data){
-		var procsize = data.inputBuffer.length;
-		/* L-ch ‚ğ•`‰æ‚·‚é */
-		var inbufL = data.inputBuffer.getChannelData(0);
-		var inbufR = data.inputBuffer.getChannelData(1);
-		var outbufL = data.outputBuffer.getChannelData(0);
-		var outbufR = data.outputBuffer.getChannelData(1);
-
-		waveshape.beginPath();
-		var ix=iy=0;
-
-		/* •`‰æ—Ìˆæ‚ÌƒNƒŠƒA */
-	    waveshape.clearRect(ixb,iyb,ixw,iyw);
-
-		/* ”gŒ`‚Ì•\¦ */
-		waveshape.strokeStyle ="#000000";
-		waveshape.moveTo(ixb, iyb+iyw/2);
-		for(var i=0;i<procsize; i+=8){
-			iy=Math.floor(inbufL[i]*100+iyw/2+iyb);
-			if(iy >= iyw+iyb ) iy=iyw+iyb;
-			else if(iy<=iyb ) iy=iyb;
-
-			ix=Math.floor(i+ixb);
-			waveshape.lineTo(ix, iy);
-		}
-		waveshape.stroke();
-
-		for(var i=0; i<procsize; i++){ outbufL[i]=inbufL[i]; outbufR[i]=inbufR[i]; }
-
-	}
-
-	//ƒf[ƒ^ˆ—ŠÖ”‚Ì’è‹`
-	node.onaudioprocess=process;
-
-	/* LOG—Ìˆæ‚Ì‰Šú‰» */
-	var log = document.getElementById("log");
+	/* LOGé ˜åŸŸã®åˆæœŸåŒ– */
 	var sampleRate = audioContext.sampleRate;
-
 	log.innerText +="sample rate:"
 	log.innerText += sampleRate;
 	log.innerText +="\n";
 
+/*
 	function leftGainChange(value){
 		log.innerText +="left gain:"
 		log.innerText +=value;
@@ -102,4 +83,43 @@
 		log.innerText +="\n";
 		gainR.gain.value = value;
 	}
+*/
+
+	navigator.getUserMedia(
+
+		mConstraints,
+
+		function(stream){
+			audiosource = audioContext.createMediaStreamSource(stream);
+			audiosource.connect(node);
+			node.connect(splitter);
+			splitter.connect(gainL, 0);
+			splitter.connect(gainR, 1);
+			gainL.connect(merger, 0, 0)
+			gainR.connect(merger, 0, 1)
+			merger.connect(audioContext.destination);
+			//ãƒ‡ãƒ¼ã‚¿å‡¦ç†é–¢æ•°ã®å®šç¾©
+			node.onaudioprocess=process;
+	},
+	function(e) {	// I can't use getUserMedia
+			console.log(e);
+		}
+	);
+}
+
+{
+	/* Audio Buffer ãŒä¸€æ¯ã«ãªã£ãŸã‚‰ã“ã®é–¢æ•°ãŒå‘¼ã°ã‚Œã‚‹ */
+	function process(data){
+		var procsize = data.inputBuffer.length;
+		/* L-ch ã‚’æç”»ã™ã‚‹ */
+		var inbufL = data.inputBuffer.getChannelData(0);
+		var inbufR = data.inputBuffer.getChannelData(1);
+		var outbufL = data.outputBuffer.getChannelData(0);
+		var outbufR = data.outputBuffer.getChannelData(1);
+
+		fdgL.fDrawLineSize(inbufL);
+
+		for(var i=0; i<procsize; i++){ outbufL[i]=inbufL[i]; outbufR[i]=inbufR[i]; }
+	}
+
 }
