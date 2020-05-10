@@ -11,7 +11,7 @@
 
 	<title>Usage of getUserMedia</title>
 
-  <style type="text/css">
+<style>
     <!--
 	#cbody{
           background-color: #ffffff;
@@ -47,17 +47,21 @@
         background-color: #ffff00;
 	}
 
+	.tomato{
+		color: #ff6347;
+	}
+
     -->
     </style>
 
-</HEAD>
+</head>
 
 <body id="cbody">
 <br>
 <div class="sans">
     <h2>Web MIDI API 実験室</h2>
-<h4>getUserMediaを使って、マイクの音をいろいろ処理してスピーカから再生</h4>
-<font color="red">このプログラムはスピーカボリュームが大きいとハウリングします</font><br>
+<h4>getUserMediaを使って、マイクの音をいろいろ処理してスピーカから再生します。</h4>
+<p class="tomato">このプログラムはスピーカボリュームが大きいとハウリングします</p>
 (2020.5.9)filter, L/Rチャンネル表示、諸々記載を追加<br>
 (2016.1.9)httpsのサーバへ移動/UTF-8に変更<br>
 (2015.4.29)波形の形状を表示
@@ -72,7 +76,7 @@
 <!--	------------------------------------------------------------------ -->
 
 <div class="sans">
-<form method="volume">
+<form name="param">
 LEFT GAIN:
     <input type="number" step="0.1" min="0.0" max="2.0" value="1.0" id="lgain">
 &nbsp;&nbsp;
@@ -98,7 +102,7 @@ Filter Cutoff:
 </ul>
 という順番で処理します。<br>
 <br>
-<img src="page36_1.png" width="600">
+<img src="page36_1.png" width="600" alt="block">
 <br>
 <h4>Web Audio APIのプログラム</h4>
 </div>
