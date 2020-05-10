@@ -202,7 +202,7 @@ function process(data){
 	var outbufR = data.outputBuffer.getChannelData(1);
 
 	// 入力を出力にコピーする
-	for(var i=0; i<procsize; i++){
+	for(var i=0; i&lt;procsize; i++){
 		outbufL[i]=inbufL[i];
 		outbufR[i]=inbufR[i];
 	}
