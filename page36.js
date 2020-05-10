@@ -117,7 +117,8 @@ function startAudioContext()
 		var outbufL = data.outputBuffer.getChannelData(0);
 		var outbufR = data.outputBuffer.getChannelData(1);
 
-		fdgL.fDrawLineSize(inbufL);
+		fdgL.fDrawLine(inbufL);
+		fdgR.fDrawLine(inbufR);
 
 		for(var i=0; i<procsize; i++){ outbufL[i]=inbufL[i]; outbufR[i]=inbufR[i]; }
 	}
