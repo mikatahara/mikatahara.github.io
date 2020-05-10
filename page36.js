@@ -26,15 +26,15 @@ window.onload = function() {
 	var wh=Math.floor(w0*0.8);
 	var ws=Math.floor(w0*0.1);
     fdgL.fSetWindowXY(ws,wh,0,120);
-    fdgL.fStrokeRect();
+//   fdgL.fStrokeRect();
 	fdgL.fSetViewPort(0,127,-1,1);
 
     fdgR = new DrawGraph(0,1024,0,120);
 	fdgR.fSetCanvas(document.getElementById("waveshapeR"));
- //   fdgR.fResizeX();
+//   fdgR.fResizeX();
 	fdgR.cv.width = window.innerWidth;
     fdgR.fSetWindowXY(ws,wh,0,120);
-    fdgR.fStrokeRect();
+//   fdgR.fStrokeRect();
 	fdgR.fSetViewPort(0,127,-1,1);
 
 	$('#mic_on').click(function(){
