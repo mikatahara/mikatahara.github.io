@@ -51,6 +51,7 @@ var merger 		= null;
 var node 		= null
 var gainL	= null;
 var gainR	= null;
+var mCh		= 0;
 
 function startAudioContext()
 {
@@ -69,21 +70,6 @@ function startAudioContext()
 	log.innerText +="sample rate:"
 	log.innerText += sampleRate;
 	log.innerText +="\n";
-
-/*
-	function leftGainChange(value){
-		log.innerText +="left gain:"
-		log.innerText +=value;
-		log.innerText +="\n";
-		gainL.gain.value = value;
-	}
-	function RightGainChange(value){
-		log.innerText +="right gain:"
-		log.innerText +=value;
-		log.innerText +="\n";
-		gainR.gain.value = value;
-	}
-*/
 
 	navigator.getUserMedia(
 
@@ -117,8 +103,15 @@ function startAudioContext()
 		var outbufL = data.outputBuffer.getChannelData(0);
 		var outbufR = data.outputBuffer.getChannelData(1);
 
-		fdgL.fDrawLine(inbufL);
-		fdgR.fDrawLine(inbufR);
+		if(mCh==0){
+			fdgL.fClearWindowAll();
+			fdgL.fDrawLine(inbufL);
+			mCh=1;
+		} else {
+			fdgR.fClearWindowAll();
+			fdgR.fDrawLine(inbufR);
+			mCh=0;
+		}
 
 		for(var i=0; i<procsize; i++){ outbufL[i]=inbufL[i]; outbufR[i]=inbufR[i]; }
 	}
