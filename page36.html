@@ -30,7 +30,7 @@
 	.sans { color: #222222; font-family:sans-serif ; font-size: 10pt; line-height : 1.5em}
 	.mono { color: #222222; font-family:monospace ; font-size: 10pt; line-height : 1.5em}
 
-     #mono { 
+     .pmono { 
         color: #101010; font-family:monospace ; font-size: 10pt; line-height : 1.5em;
         background-color: #f4f4f4;
       }
@@ -107,7 +107,7 @@ Filter Cutoff:
 <h4>Web Audio APIのプログラム</h4>
 </div>
 
-<pre id="mono"><code class="prettyprint">
+<pre class="pmono"><code class="prettyprint">
 {
 	//Audio Api を立ち上げる //webkitAudioContext()は古い！と怒られる
 	audioContext	= new AudioContext();
@@ -171,7 +171,7 @@ Filter Cutoff:
 getUserMediaのオプションは以下の通り<br>
 </div>
 
-<pre id="mono"><code class="prettyprint">
+<pre class="pmono"><code class="prettyprint">
 // constraints
 var mConstraints = {
 	video: false,
@@ -193,7 +193,7 @@ if (window.chrome) {
 Audio Buffer が一杯になったらi以下関数が呼ばれる<br>
 </div>
 
-<pre id="mono"><code class="prettyprint">
+<pre class="pmono"><code class="prettyprint">
 function process(data){
 	var procsize = data.inputBuffer.length;
 	var inbufL = data.inputBuffer.getChannelData(0);
