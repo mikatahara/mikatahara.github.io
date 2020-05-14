@@ -67,8 +67,27 @@ alink="#ff0000" style="margin-right:28px;margin-left:28px;margin-top:20px;">
 		navigator.mozGetUserMedia ||
 		navigator.msGetUserMedia);
 
+// constraints
+var mConstraints = {
+//	video: false,
+//	audio: { echoCancellation: false }  // エコーキャンセラ無効化
+	video: true,
+	audio: false
+};
+
+// constraints (Chrome)
+if (window.chrome) {
+	mConstraints = {
+//		video: false,
+//		audio: {mandatory: {echoCancellation : false, googEchoCancellation: false}}  
+	video: true,
+	audio: false
+	};
+}
+
 	function soundThrough() {
-		navigator.getUserMedia({ video: true },
+//		navigator.getUserMedia({ video: true },
+		mConstraints,
 
 		function(stream){
 			var video = document.querySelector('video#myVideo');
