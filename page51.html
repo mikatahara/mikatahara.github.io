@@ -62,10 +62,11 @@ alink="#ff0000" style="margin-right:28px;margin-left:28px;margin-top:20px;">
 </body>
 <script>
 {
-	navigator.getUserMedia = ( navigator.getUserMedia ||
+/*	navigator.getUserMedia = ( navigator.getUserMedia ||
 		navigator.webkitGetUserMedia ||
 		navigator.mozGetUserMedia ||
 		navigator.msGetUserMedia);
+*/
 
 // constraints
 var mConstraints = {
@@ -85,8 +86,8 @@ if (window.chrome) {
 	};
 }
 
-	function soundThrough() {
-//		navigator.getUserMedia({ video: true },
+	navigator.getUserMedia(
+
 		mConstraints,
 
 		function(stream){
@@ -102,11 +103,8 @@ if (window.chrome) {
 		function(e) {
 			console.log(e);
 		}
-		);
-	}
+	);
 
-
-	soundThrough();
 }
 
 </script>
