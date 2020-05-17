@@ -1,65 +1,95 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta http-equiv="Content-Script-Type" content="text/javascript">
-	<script type="text/javascript" src="drawgraph.js"></script>
+<!--	<meta http-equiv="Content-Script-Type" content="text/javascript"> -->
+
 	<title>Video Check</title>
 
 <!--	------------------------------------------------------------------	-->
 <style type="text/css">
     <!--
-    #sans { color: black; font-family:sans-serif ;  font-size: 10pt; line-height : 1.5em}
-    #mono { color: black; font-family:monospace ; font-size: 10pt; line-height : 1.5em}
-    #monb { color: blue; font-family:monospace ; font-size: 10pt; line-height : 1.5em}
+	#cbody{
+          background-color: #ffffff;
+          color : #000000;
+          margin-right:28px;
+          margin-left:28px;
+          margin-top:20px;
+          -webkit-text-size-adjust: 100%;
+    }
 
-    #log {
-     width:20em; height:12em; margin:.5em 0 .5em 0; padding:.5em; background-color:#eee;
-     border:solid 1px #888; white-space:pre; font-family:Courier New, monospace; font-size:.75em;
-     overflow:auto;
+    a:link 		{ color: #4040ff; }
+    a:visited	{ color: #ff0000; }
+    a:hover		{ color: #0000ff; }
+    a:active	{ color: #ff8000; }
+
+	.sans { color: #222222; font-family:sans-serif ; font-size: 10pt; line-height : 1.5em}
+	.mono { color: #222222; font-family:monospace ; font-size: 10pt; line-height : 1.5em}
+
+     .pmono { 
+        color: #101010; font-family:monospace ; font-size: 10pt; line-height : 1.5em;
+        background-color: #f4f4f4;
+      }
+      
+    #log{
+        color: #808080; font-family:monospace ; font-size: 10pt; line-height : 1.5em;
+        background-color: #00ffff;
     }
     -->
 </style>
 
 </head>
-<body bgcolor="#ccccff" text="#000000" link="#0000ff" vlink="#ff00ff" 
-alink="#ff0000" style="margin-right:28px;margin-left:28px;margin-top:20px;">
-<center><h2>Web MIDI API 実験室<h2></center>
-<center><h4>Study about Video through getUserMedia</h4></center>
+<body id="cbody">
+<div class="sans">
+<h2>Study about Video through getUserMedia</h2>
+内臓カメラの映像を、getUserMediaを使ってブラウザに表示します。
+</div>
 
 <video id="myVideo" autoplay></video>
 
-<pre id="mono">
+<pre class="pmono"><code class="prettyprint">
 {
-	navigator.getUserMedia = ( navigator.getUserMedia ||
+/*	navigator.getUserMedia = ( navigator.getUserMedia ||
 		navigator.webkitGetUserMedia ||
 		navigator.mozGetUserMedia ||
 		navigator.msGetUserMedia);
+*/
 
-	function soundThrough() {
-		navigator.getUserMedia({ video: true },
+// constraints
+var mConstraints = {
+	video: true,
+	audio: false
+};
 
-		function(stream){
-			var video = document.querySelector('video#myVideo');
-			video.src = window.URL.createObjectURL(stream);
-			video.onloadedmetadata = function(e) {
-				video.play();
-			};
-
-		},
-
-		function(e) {
-			console.log(e);
-		}
-		);
-	}
-
-
-	soundThrough();
+// constraints (Chrome)
+if (window.chrome) {
+	mConstraints = {
+		video: true,
+		audio: false
+	};
 }
-</pre>
 
-</body>
+navigator.getUserMedia(
+
+	mConstraints,
+
+	function(stream){
+		var video = document.querySelector('video');
+		video.srcObject = stream;
+		localMediaStream = stream;
+		video.onloadedmetadata = function(e) {
+			video.play();
+		};
+
+	},
+
+	function(e) {
+		console.log(e);
+	}
+);
+
+}
+</code></pre>
 <script>
 {
 /*	navigator.getUserMedia = ( navigator.getUserMedia ||
@@ -94,7 +124,8 @@ if (window.chrome) {
 //			var video = document.querySelector('video#myVideo');
 //			video.src = window.URL.createObjectURL(stream);
 			var video = document.querySelector('video');
-			video.src = window.URL.createObjectURL(stream);
+//			video.srcObject = window.URL.createObjectURL(stream);
+			video.srcObject = stream;
 
 			localMediaStream = stream;
 			video.onloadedmetadata = function(e) {
@@ -112,4 +143,16 @@ if (window.chrome) {
 
 </script>
 
+<!-- ====================================================================== -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-66117399-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</body>
 </html>
