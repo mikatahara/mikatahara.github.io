@@ -91,8 +91,11 @@ if (window.chrome) {
 		mConstraints,
 
 		function(stream){
-			var video = document.querySelector('video#myVideo');
+//			var video = document.querySelector('video#myVideo');
+//			video.src = window.URL.createObjectURL(stream);
+			var video = document.querySelector('video');
 			video.src = window.URL.createObjectURL(stream);
+
 			localMediaStream = stream;
 			video.onloadedmetadata = function(e) {
 				video.play();
