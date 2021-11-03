@@ -400,6 +400,17 @@ DrawGraph.prototype={
 		this.ctx.stroke();
 	},
 
+	fDrawLineXY: function(d,size){
+		this.ctx.beginPath();
+		this.fConvPos(d[0][0],d[0][1]);
+		this.ctx.moveTo(this.iPx, this.iPy);
+		for(var i=0; i<size; i++){
+			this.fConvPos(d[i][0],d[i][1]);
+			this.ctx.lineTo(this.iPx, this.iPy);
+		}
+		this.ctx.stroke();
+	},
+
 	/* *******************************************	*/
 	/* 点線を引く	Window 座標						*/
 	/* *******************************************	*/
