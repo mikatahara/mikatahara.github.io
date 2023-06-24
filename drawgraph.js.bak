@@ -547,13 +547,6 @@ DrawGraph.prototype={
 		this.ctx.fill();
 	},
 
-	fDrawArcXYnofill: function(x,y,radix,sp=0,ep=Math.PI*2){
-		this.ctx.beginPath();
-		this.fConvPos(x,y);
-  		this.ctx.arc(this.iPx, this.iPy, radix, sp, ep, false);
-		this.ctx.stroke();
-	},
-
 }
 
 function goAnimation(){}
