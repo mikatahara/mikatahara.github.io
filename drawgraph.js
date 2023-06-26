@@ -492,6 +492,23 @@ DrawGraph.prototype={
 		this.ctx.stroke();
 	},
 
+
+	fHorizontalWaves(d,size){
+		this.fSetViewPortX( 0,size);
+		var rat = this.iVye-this.iVys;
+		for(i=0; i<size; i+=2){
+			var cc = Math.floor((d[i]-this.iVys)/rat*256);
+			var cca = 256-cc;
+			if(cca<0) cca=0;
+			else if(cca>=256) cca=255;
+			var color = cca.toString(10);
+			var rgb ='rgb(' + color + ',' + color + ',' + color + ')';
+			this.ctx.strokeStyle = rgb;
+			this.fVLine(i,this.iVys,i,this.iVye);
+		}
+	},
+
+
 	/* *******************************************	*/
 	/* 点線を引く	Window 座標						*/
 	/* *******************************************	*/
