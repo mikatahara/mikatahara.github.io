@@ -1,73 +1,109 @@
 <html>
+
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="Content-Script-Type" content="text/javascript">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<style>
-	#keyboard {width:100%; height:210px;}
-    #sans {color: black; font-family:sans-serif ; font-size: 10pt; line-height : 1.5em}
-    #sans12 {color: black; font-family:sans-serif ; font-size: 12pt; line-height : 1.5em}
-    #mono {color: black; font-family:monospace  ; font-size: 10pt; line-height : 1.5em}
-</style>
+	<style>
+		#keyboard {
+			width: 100%;
+			height: 210px;
+		}
+
+		#sans {
+			color: black;
+			font-family: sans-serif;
+			font-size: 10pt;
+			line-height: 1.5em
+		}
+
+		#sans12 {
+			color: black;
+			font-family: sans-serif;
+			font-size: 12pt;
+			line-height: 1.5em
+		}
+
+		#mono {
+			color: black;
+			font-family: monospace;
+			font-size: 10pt;
+			line-height: 1.5em
+		}
+	</style>
 	<title>Web MIDI Experiments</title>
 
 </head>
 
-<body bgcolor="#f0f0f0" text="#222222" link="#0000ff" vlink="#ff00ff" alink="#ff0000" style="margin-right:30px; margin-left:30px; margin-top:20px; width: auto; -webkit-text-size-adjust:100%;">
-<br>
-<br>
-<h2>Web MIDI Experiments</h2>
-<div id="mono">27,Aug.2020</div><br>
-<div id="sans">
- Web MIDI API is going to be developed by Audio Working Group of W3C. I am trying a using this API. My experiments poupose is that a playing Musical Instrument by the browser. And I want to control a browser application by a hardware controler or gamepad. I am a biginer of javascript developer. So I am studing javascript by some experiment. And I am trying some Web API for playing music or musical instrument.
-</div>
-<br>
+<body bgcolor="#f0f0f0" text="#222222" link="#0000ff" vlink="#ff00ff" alink="#ff0000"
+	style="margin-right:30px; margin-left:30px; margin-top:20px; width: auto; -webkit-text-size-adjust:100%;">
+	<br>
+	<br>
+	<h2>Web MIDI Experiments</h2>
+	<div id="mono">27,Aug.2020</div><br>
+	<div id="sans">
+		Web MIDI API is going to be developed by Audio Working Group of W3C. I am trying a using this API. My
+		experiments poupose is that a playing Musical Instrument by the browser. And I want to control a browser
+		application by a hardware controler or gamepad. I am a biginer of javascript developer. So I am studing
+		javascript by some experiment. And I am trying some Web API for playing music or musical instrument.
+	</div>
+	<br>
 
-<div id="sans">
- Please use Microsoft Edge or Google Chrome browser. The other browser can't use Web MIDI API now. Please check your browser adopting Web MIDI API or not. Please open the blow page and "MIDI read!" is displaied, you can use Web MIDI API.
-</div>
+	<div id="sans">
+		Please use Microsoft Edge or Google Chrome browser. The other browser can't use Web MIDI API now. Please check
+		your browser adopting Web MIDI API or not. Please open the blow page and "MIDI read!" is displaied, you can use
+		Web MIDI API.
+	</div>
 
-<div id="sans12">
-<ul>
-<li>MIDI Tools
-	<ul>
-	<li><a href="https://mikatahara.github.io/webmiditest.html" TARGET="_blank">Web MIDI enviromnebt check</a>
-	<li><a href="https://mikatahara.github.io/MidiMonitor/" TARGET="_blank">MIDI Monitor</a>
-	<li><a href="https://mikatahara.github.io/MIDI-patchbay/" TARGET="_blank">MIDI Patchbay</a>
-	<li><a href="https://mikatahara.github.io/SendReceive/" TARGET="_blank">MIDI Send & Receive</a>
-	<li><a href="https://mikatahara.github.io/SmfPlayer/" TARGET="_blank">SMF Player</a>
-	<li><a href="https://mikatahara.github.io/RefaceDX/" TARGET="_blank">Reface DX Editor</a>
-	<li><a href="https://mikatahara.github.io/ControlChangeMonitor/" TARGET="_blank">Control Change Monitor</a>
-	<li><a href="https://mikatahara.github.io/NRPN-controller/" TARGET="_blank">NRPN Controller</a>
-	</ul>
-<br>
-<li>Audio Application
-	<ul>
-	<li><a href="https://mikatahara.github.io/PianoMachine/" TARGET="_blank">Piano Machine</a><br>
-        <a href=https://github.com/mikatahara/PianoMachine/tree/gh-pages TARGET="_blank">Readme and Program</a><br>
-	<li><a href="https://mikatahara.github.io/DrumMachine/" TARGET="_blank">Drum Machine</a>
-	<li><a href="https://mikatahara.github.io/DrumMachine/touchDrum.html" TARGET="_blank">Touch Drum</a><br>
-<div id="sans">
-Drum app can be used by iphone.</div>
-	<li><a href="https://mikatahara.github.io/PianoMachine/touchBox.html" TARGET="_blank">Touch Box</a><br>
-<div id="sans">
-Piano app can be used by iphone.</div>
-	<li><a href="https://mikatahara.github.io/DrumSequencer/" TARGET="_blank">Drum Looper</a>
-	<li><a href="https://mikatahara.github.io/Pop-Looper/" TARGET="_blank">Pop Looper</a>
-	<li><a href="https://mikatahara.github.io/SpeAna/" TARGET="_blank">Spectrum Analyzer</a>
-	</ul>
-</ul>
-    <br></div>
+	<div id="sans12">
+		<ul>
+			<li>MIDI Tools
+				<ul>
+					<li><a href="https://mikatahara.github.io/webmiditest.html" TARGET="_blank">Web MIDI enviromnebt
+							check</a>
+					<li><a href="https://mikatahara.github.io/MidiMonitor/" TARGET="_blank">MIDI Monitor</a>
+					<li><a href="https://mikatahara.github.io/MIDI-patchbay/" TARGET="_blank">MIDI Patchbay</a>
+					<li><a href="https://mikatahara.github.io/SendReceive/" TARGET="_blank">MIDI Send & Receive</a>
+					<li><a href="https://mikatahara.github.io/SmfPlayer/" TARGET="_blank">SMF Player</a>
+					<li><a href="https://mikatahara.github.io/RefaceDX/" TARGET="_blank">Reface DX Editor</a>
+					<li><a href="https://mikatahara.github.io/ControlChangeMonitor/" TARGET="_blank">Control Change
+							Monitor</a>
+					<li><a href="https://mikatahara.github.io/NRPN-controller/" TARGET="_blank">NRPN Controller</a>
+				</ul>
+				<br>
+			<li>Audio Application
+				<ul>
+					<li><a href="https://mikatahara.github.io/PianoMachine/" TARGET="_blank">Piano Machine</a><br>
+						<a href=https://github.com/mikatahara/PianoMachine/tree/gh-pages TARGET="_blank">Readme and
+							Program</a><br>
+					<li><a href="https://mikatahara.github.io/DrumMachine/" TARGET="_blank">Drum Machine</a>
+					<li><a href="https://mikatahara.github.io/DrumMachine/touchDrum.html" TARGET="_blank">Touch
+							Drum</a><br>
+						<div id="sans">
+							Drum app can be used by iphone.</div>
+					<li><a href="https://mikatahara.github.io/PianoMachine/touchBox.html" TARGET="_blank">Touch
+							Box</a><br>
+						<div id="sans">
+							Piano app can be used by iphone.</div>
+					<li><a href="https://mikatahara.github.io/DrumSequencer/" TARGET="_blank">Drum Looper</a>
+					<li><a href="https://mikatahara.github.io/Pop-Looper/" TARGET="_blank">Pop Looper</a>
+					<li><a href="https://mikatahara.github.io/SpeAna/" TARGET="_blank">Spectrum Analyzer</a>
+				</ul>
+			<li>USB Application
+				<ul>
+					<li><a href="https://mikatahara.github.io/SerialMonitor/" TARGET="_blank">Serial Monitor</a><br>
+				</ul>
+		</ul>
+		<br>
+	</div>
+	<!-- ---------------------------------------------------------------------	-->
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+		gtag('config', 'G-7W70818VR0');
+	</script>
+	<!---------------------------------------------------------------------------->
 </body>
-<!---------------------------------------------------------------------------->
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-66117399-1', 'auto');
-  ga('send', 'pageview');
-</script>
-<!---------------------------------------------------------------------------->
 </html>
