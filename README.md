@@ -27,7 +27,7 @@ Please use Chrome browser. The other browser can't use Web MIDI API now. Please 
 
   - [Application](https://github.com/mikatahara/RefaceDX)
 <br><br>
-  <img src="https://www.webmidiaudio.com/jpeg/refacedx.jpg" width="640"　alt="reface editor">
+    ![reface DX Editor](img/refacedx.jpg)
 
 - [Control Change Monitor](https://mikatahara.github.io/ControlChangeMonitor/)
 
