@@ -6,33 +6,40 @@ Please use Chrome browser. The other browser can't use Web MIDI API now. Please 
 
 ## MIDI Tools
 - [MIDI Monitor](https://mikatahara.github.io/MidiMonitor/)
+   
+  - [Application](https://github.com/mikatahara/MidiMonitor/tree/gh-pages)
   
-  - [Readme and Program](https://github.com/mikatahara/MidiMonitor/tree/gh-pages)
-  
+  <img src="https://mikatahara.github.io/MidiMonitor/midimonitor.png" width="640"　alt="midi monitor">
+
 - [MIDI Patchbay](https://mikatahara.github.io/MIDI-patchbay/)
   
-  - [Readme and Program](https://github.com/mikatahara/MIDI-patchbay/tree/gh-pages)
-  
+  - [Application](https://github.com/mikatahara/MIDI-patchbay/tree/gh-pages)
+
 - [MIDI Send & Receive](https://mikatahara.github.io/SendReceive/)
   
-  - [Readme and Program](https://github.com/mikatahara/SendReceive/tree/gh-pages)
-  
+  - [Application](https://github.com/mikatahara/SendReceive/tree/gh-pages)
+
+  <img src="https://mikatahara.github.io/SendReceive/sendreceive.png" width="640" alt="send and receive">
+
 - [SMF Player](https://mikatahara.github.io/SmfPlayer/)
 
 - [Reface DX Editor](https://mikatahara.github.io/RefaceDX/)
+
+  - [Application](https://github.com/mikatahara/RefaceDX)
+
+  <img src="https://mikatahara.github.io/RefaceDX/jpg/refacedx00.jpg" width="640"　alt="reface editor">
 
 - [Control Change Monitor](https://mikatahara.github.io/ControlChangeMonitor/)
 
 - [NRPN-Controller](https://mikatahara.github.io/NRPN-Controller/)
 
   - [Usage](https://github.com/mikatahara/NRPN-controller)
-
-    
+   
 
 ## Audio Application
 - [Piano Machine](https://mikatahara.github.io/PianoMachine/)
 
-  - [Readme and Program](https://github.com/mikatahara/PianoMachine/tree/gh-pages)
+  - [Application](https://github.com/mikatahara/PianoMachine/tree/gh-pages)
 
 - [Touch Box](https://mikatahara.github.io/PianoMachine/touchBox.html)
 
@@ -48,8 +55,18 @@ Please use Chrome browser. The other browser can't use Web MIDI API now. Please 
 
 - [Pop Looper](https://mikatahara.github.io/Pop-Looper/)
 
+- [Spectrum Analyzer](https://github.com/mikatahara/SpeAna)
+
+  - [Application](https://mikatahara.github.io/SpeAna/)
+
+  <img src="https://www.webmidiaudio.com/jpeg/IMG_4807.png" height="640" alt="serial monitor">
+
 ## USB Application
-- [Serial Monitor](https://mikatahara.github.io/SerialMonitor/)
+- [Serial Monitor](https://github.com/mikatahara/SerialMonitor)
+
+  - [Application](https://mikatahara.github.io/SerialMonitor/)
+
+  <img src="https://webmidiaudio.com/jpeg/serialmonitor.jpg" width="640" alt="serial monitor">
 
 Index page is [Index.html](https://mikatahara.github.io/)<br>
 My Web site is [WebMidiAudio](https://webmidiaudio.com/)<br>
