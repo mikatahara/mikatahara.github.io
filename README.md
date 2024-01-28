@@ -9,7 +9,7 @@ Please use Chrome browser. The other browser can't use Web MIDI API now. Please 
    
   - [Application](https://github.com/mikatahara/MidiMonitor/tree/gh-pages)
   
-  <img src="https://mikatahara.github.io/MidiMonitor/midimonitor.png" width="640"　alt="midi monitor">
+  <img src="https://www.webmidiaudio.com/jpeg/midimonitor.png" width="640"　alt="midi monitor">
 
 - [MIDI Patchbay](https://mikatahara.github.io/MIDI-patchbay/)
   
@@ -18,7 +18,7 @@ Please use Chrome browser. The other browser can't use Web MIDI API now. Please 
 - [MIDI Send & Receive](https://mikatahara.github.io/SendReceive/)
   
   - [Application](https://github.com/mikatahara/SendReceive/tree/gh-pages)
-
+<br><br>
   <img src="https://mikatahara.github.io/SendReceive/sendreceive.png" width="640" alt="send and receive">
 
 - [SMF Player](https://mikatahara.github.io/SmfPlayer/)
@@ -26,8 +26,9 @@ Please use Chrome browser. The other browser can't use Web MIDI API now. Please 
 - [Reface DX Editor](https://mikatahara.github.io/RefaceDX/)
 
   - [Application](https://github.com/mikatahara/RefaceDX)
+<br><br>
 
-  <img src="https://mikatahara.github.io/RefaceDX/jpg/refacedx00.jpg" width="640"　alt="reface editor">
+  <img src="https://www.webmidiaudio.com/jpeg/refacedx.jpg" width="640"　alt="reface editor">
 
 - [Control Change Monitor](https://mikatahara.github.io/ControlChangeMonitor/)
 
@@ -58,6 +59,7 @@ Please use Chrome browser. The other browser can't use Web MIDI API now. Please 
 - [Spectrum Analyzer](https://github.com/mikatahara/SpeAna)
 
   - [Application](https://mikatahara.github.io/SpeAna/)
+<br><br>
 
   <img src="https://www.webmidiaudio.com/jpeg/IMG_4807.png" height="640" alt="serial monitor">
 
@@ -65,6 +67,7 @@ Please use Chrome browser. The other browser can't use Web MIDI API now. Please 
 - [Serial Monitor](https://github.com/mikatahara/SerialMonitor)
 
   - [Application](https://mikatahara.github.io/SerialMonitor/)
+<br><br>
 
   <img src="https://webmidiaudio.com/jpeg/serialmonitor.jpg" width="640" alt="serial monitor">
 
