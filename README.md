@@ -21,16 +21,17 @@ Please use Chrome browser. The other browser can't use Web MIDI API now. Please 
 <br><br>
 
   <img src="https://mikatahara.github.io/SendReceive/sendreceive.png" width="640" alt="send and receive">
+<br>
 
 - [SMF Player](https://mikatahara.github.io/SmfPlayer)
 
-  - [Application](https://github.com/mikatahara/SmfPlayer)
+  - [Application](https://github.com/mikatahara/SmfPlayertree/gh-pages)
 
-<img src="https://webmidiaudio.com/jpeg/2022042601.jpg" width="640">
+  <img src="https://webmidiaudio.com/jpeg/2022042601.jpg" width="640">
 
 - [Reface DX Editor](https://mikatahara.github.io/RefaceDX/)
 
-  - [Application](https://github.com/mikatahara/RefaceDX)
+  - [Application](https://github.com/mikatahara/RefaceDXtree/gh-pages)
 <br><br>
 
     ![reface DX Editor](img/refacedx.jpg)
