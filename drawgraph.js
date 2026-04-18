@@ -425,6 +425,9 @@ DrawGraph.prototype={
 		this.ctx.fillStyle = this.ctx.strokeStyle = e;
 	},
 
+	fLineWidth: function(e){
+		this.ctx.lineWidth = e;
+	},
 
 	/* *******************************************	*/
 	/* 矢印を書く											*/
