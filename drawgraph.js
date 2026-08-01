@@ -4,18 +4,18 @@ function edges(ctx, p1, p2, cutoff) {
 
 	if (!cutoff) cutoff = 220; // alpha threshold
 
-	var dx = Math.abs(p2.x - p1.x), dy = Math.abs(p2.y - p1.y),
+	let dx = Math.abs(p2.x - p1.x), dy = Math.abs(p2.y - p1.y),
 		sx = p2.x > p1.x ? 1 : -1, sy = p2.y > p1.y ? 1 : -1;
-	var x0 = Math.min(p1.x, p2.x), y0 = Math.min(p1.y, p2.y);
-	var pixels = ctx.getImageData(x0, y0, dx + 1, dy + 1).data;
-	var hits = [], over = null;
+	let x0 = Math.min(p1.x, p2.x), y0 = Math.min(p1.y, p2.y);
+	let pixels = ctx.getImageData(x0, y0, dx + 1, dy + 1).data;
+	let hits = [], over = null;
 
 	for (x = p1.x, y = p1.y, e = dx - dy; x != p2.x || y != p2.y;) {
-		var alpha = pixels[((y - y0) * (dx + 1) + x - x0) * 4 + 3];
+		let alpha = pixels[((y - y0) * (dx + 1) + x - x0) * 4 + 3];
 		if (over != null && (over ? alpha < cutoff : alpha >= cutoff)) {
 			hits.push({ x: x, y: y });
 		}
-		var e2 = 2 * e;
+		let e2 = 2 * e;
 		if (e2 > -dy) { e -= dy; x += sx }
 		if (e2 < dx) { e += dx; y += sy }
 		over = alpha >= cutoff;
@@ -28,7 +28,7 @@ function arrow(ctx, p1, p2, size) {
 	ctx.save();
 
 	// Rotate the context to point along the path
-	var dx = p2.x - p1.x, dy = p2.y - p1.y, len = Math.sqrt(dx * dx + dy * dy);
+	let dx = p2.x - p1.x, dy = p2.y - p1.y, len = Math.sqrt(dx * dx + dy * dy);
 	ctx.translate(p2.x, p2.y);
 	ctx.rotate(Math.atan2(dy, dx));
 
@@ -54,7 +54,7 @@ function arrow(ctx, p1, p2, size) {
 
 /* 三角形を描く */
 function triangle(ctx, p, hight) {
-	var dx = p.x, dy = p.y;
+	let dx = p.x, dy = p.y;
 	ctx.beginPath();
 	ctx.beginPath();
 	ctx.moveTo(dx, dy);
@@ -69,7 +69,7 @@ function triangle(ctx, p, hight) {
 
 function DrawGraph(iWxs, iWxe, iWys, iWye) {
 
-	var i, j;
+	let i, j;
 	this.cv = null;	//Canvas
 	this.ctx = null; 	//Canvas Context
 
@@ -107,6 +107,9 @@ function DrawGraph(iWxs, iWxe, iWys, iWye) {
 	this.mMf = 0;	/* mouse flag 1:Down 0:Up */
 
 	this.tmp = 0;
+
+	// color 初期設定
+	this.color = "rgb(0, 0, 0)";
 }
 
 DrawGraph.prototype = {
@@ -215,8 +218,8 @@ DrawGraph.prototype = {
 	/*	Mouseの座標は、mcX, mcYに保存				*/
 	/* *******************************************	*/
 	fMouseClick: function (e) {
-		var mouseX, mouseY;
-		var rect = e.target.getBoundingClientRect();
+		let mouseX, mouseY;
+		let rect = e.target.getBoundingClientRect();
 		mouseX = e.clientX - rect.left;
 		mouseY = e.clientY - rect.top;
 		mouseX *= this.cv.width / this.cv.clientWidth
@@ -237,9 +240,9 @@ DrawGraph.prototype = {
 	/*	Mouseの座標は、mcX, mcYに保存				*/
 	/* *******************************************	*/
 	fMouseUp: function (e) {
-		var mouseX, mouseY;
+		let mouseX, mouseY;
 		if (this.log==null) this.log = document.getElementById("log");
-		var rect = e.target.getBoundingClientRect();
+		let rect = e.target.getBoundingClientRect();
 		mouseX = e.clientX - rect.left;
 		mouseY = e.clientY - rect.top;
 		mouseX *= this.cv.width / this.cv.clientWidth
@@ -261,8 +264,8 @@ DrawGraph.prototype = {
 	fMouseMove: function (e) {
 		if (this.mMf == 0) return;
 
-		var mouseX, mouseY;
-		var rect = e.target.getBoundingClientRect();
+		let mouseX, mouseY;
+		let rect = e.target.getBoundingClientRect();
 		mouseX = e.clientX - rect.left;
 		mouseY = e.clientY - rect.top;
 		mouseX *= this.cv.width / this.cv.clientWidth
@@ -311,15 +314,15 @@ DrawGraph.prototype = {
 
 	/* Image をurlから読み込む */
 	fDispImg: function (urlpos) {
-		var self = this;
-		var cw = this.ctx.canvas.width;
-		var ch = this.ctx.canvas.height;
+		let self = this;
+		let cw = this.ctx.canvas.width;
+		let ch = this.ctx.canvas.height;
 		img = new Image();
 		img.src = urlpos;
 
 		img.onload = function () {
-			var iw = img.width;
-			var ih = img.height;
+			let iw = img.width;
+			let ih = img.height;
 			this.tmp = ih;
 			self.ctx.drawImage(img, 0, 0, iw, ih, 0, 0, cw, ch);
 		}
@@ -356,6 +359,8 @@ DrawGraph.prototype = {
 	/*	View Port (vxs,vys)							*/
 	/*	fVWriteText("abcdef",vxs,vxy)				*/
 	/* *******************************************	*/
+
+	/* グラフ座標 */
 	fVWriteText: function (d, vxs, vys) {
 		this.ctx.textAlign = "start";
 		this.fConvPos(vxs, vys);
@@ -365,8 +370,9 @@ DrawGraph.prototype = {
 	/* *******************************************	*/
 	/*				Window の枠を描く				*/
 	/* *******************************************	*/
+
+	/* Windows座標 */
 	fStrokeRect: function () {
-		this.ctx.fillStyle = "rgb(200, 0, 0)";
 		this.ctx.strokeRect(this.iWxs, this.iWys, this.iWxe - this.iWxs, this.iWye - this.iWys);
 	},
 
@@ -374,13 +380,15 @@ DrawGraph.prototype = {
 	/*					四角形を描く 				*/
 	/* View Port (vxs,vys) -> (vxe,vye) の四角を描く*/
 	/* *******************************************	*/
+
+	/* グラフ座標 */
 	fVRect: function (vxs, vys, vxe, vye) {
 		this.fConvPos(vxs, vys);
-		var xs = this.iPx;
-		var ys = this.iPy;
+		let xs = this.iPx;
+		let ys = this.iPy;
 		this.fConvPos(vxe, vye);
-		var xd = this.iPx - xs;
-		var yd = this.iPy - ys;
+		let xd = this.iPx - xs;
+		let yd = this.iPy - ys;
 		this.ctx.strokeRect(xs, ys, xd, yd);
 	},
 
@@ -389,21 +397,26 @@ DrawGraph.prototype = {
 	/* View Port (vxs,vys) -> (vxe,vye) の四角を描く*/
 	/* 四角形を color で塗りつぶす					*/
 	/* *******************************************	*/
+
+	/* グラフ座標 */
 	fVFillRect: function (vxs, vys, vxe, vye, color) {
 		this.fConvPos(vxs, vys);
-		var xs = this.iPx;
-		var ys = this.iPy;
+		let xs = this.iPx;
+		let ys = this.iPy;
 		this.fConvPos(vxe, vye);
-		var xd = this.iPx - xs;
-		var yd = this.iPy - ys;
+		let xd = this.iPx - xs;
+		let yd = this.iPy - ys;
 		this.ctx.fillStyle = color;
 		this.ctx.fillRect(xs, ys, xd, yd);
+		this.ctx.fillStyle = this.color;
 	},
 
-	/* *******************************************	*/
-	/*					線を引く 					*/
-	/* View Port (vxs,vys) -> (vxe,vye) に線を引く	*/
-	/* *******************************************	*/
+	/* *******************************************
+						線を引く 					
+		View Port (vxs,vys) -> (vxe,vye) に線を引く
+	*******************************************	*/
+
+	/* グラフ座標 */
 	fVLine: function (vxs, vys, vxe, vye) {
 		this.ctx.beginPath();
 		this.fConvPos(vxs, vys);
@@ -413,6 +426,7 @@ DrawGraph.prototype = {
 		this.ctx.stroke();
 	},
 
+	/* ウィンドウ座標 */
 	fLine: function (xs, ys, xe, ye) {
 		this.ctx.beginPath();
 		this.ctx.moveTo(xs, ys);
@@ -422,6 +436,7 @@ DrawGraph.prototype = {
 
 	fFillColor: function (e) {
 		this.ctx.fillStyle = this.ctx.strokeStyle = e;
+		this.color = e;
 	},
 
 	fLineWidth: function (e) {
@@ -431,19 +446,37 @@ DrawGraph.prototype = {
 	/* *******************************************	*/
 	/* 矢印を書く											*/
 	/* *******************************************	*/
-	fArrow: function (x0, y0, x1, y1) {
-		var start = new Object;
-		var end = new Object;
+	/* ウィンドウ座標 */
+	/* rad:半径 */
+	fArrow: function (x0, y0, x1, y1,rad) {
+		let start = new Object;
+		let end = new Object;
 		this.ctx.save();
 		this.ctx.lineWidth = 2;
-		this.ctx.fillStyle = this.ctx.strokeStyle = '#009';
 		start.x = x0; start.y = y0;
 		end.x = x1; end.y = y1;
-		arrow(this.ctx, start, end, 10);
+		arrow(this.ctx, start, end, rad);
 		this.ctx.restore();
 	},
 
+	/* グラフ座標 */
+	/* rad:半径 */
+	fVArrow: function (x0, y0, x1, y1, rad) {
+		let start = new Object;
+		let end = new Object;
+		this.ctx.save();
+		this.ctx.lineWidth = 2;
+		
+		this.fConvPos(x0, y0);
+		start.x = this.iPx;
+		start.y = this.iPy;
+		this.fConvPos(x1, y1);
+		end.x = this.iPx;
+		end.y = this.iPy;
 
+		arrow(this.ctx, start, end, rad);
+		this.ctx.restore();
+	},
 	/* *******************************************	*/
 	/* キャンバスを、Windowのサイズに広げる			*/
 	/* *******************************************	*/
@@ -459,35 +492,51 @@ DrawGraph.prototype = {
 		this.fSetWindowXY(0, this.cv.width, 0, this.cv.height);
 	},
 
+	/* ******************************************
+	/* グラフ座標で、d[y] の波形を表示する。
+	/* size 指定なし。d.lengthでX軸のViewportを変更する。
+	/* x-軸は配列の番号						
+	/* Viewport 座標
+	****************************************** */
 	fDrawLine: function (d) {
 		this.fSetViewPortX(0, d.length);
 		this.ctx.beginPath();
 		this.fConvPos(0, d[0]);
 		this.ctx.moveTo(this.iPx, this.iPy);
-		for (var i = 0; i < d.length; i++) {
+		for (let i = 0; i < d.length; i++) {
 			this.fConvPos(i, d[i]);
 			this.ctx.lineTo(this.iPx, this.iPy);
 		}
 		this.ctx.stroke();
 	},
 
+	/* ******************************************
+	/* グラフ座標で、d[y] の波形を表示する。
+	/* size 指定あり
+	/* x-軸は配列の番号						
+	/* Viewport 座標
+	****************************************** */
 	fDrawLineSize: function (d, size) {
 		this.fSetViewPortX(0, size);
 		this.ctx.beginPath();
 		this.fConvPos(0, d[0]);
 		this.ctx.moveTo(this.iPx, this.iPy);
-		for (var i = 0; i < size; i++) {
+		for (let i = 0; i < size; i++) {
 			this.fConvPos(i, d[i]);
 			this.ctx.lineTo(this.iPx, this.iPy);
 		}
 		this.ctx.stroke();
 	},
 
+	/* ******************************************
+	/* グラフ座標で、d[x,y] の波形を表示する。
+	/* Viewport 座標 
+	****************************************** */
 	fDrawLineXY: function (d, size) {
 		this.ctx.beginPath();
 		this.fConvPos(d[0][0], d[0][1]);
 		this.ctx.moveTo(this.iPx, this.iPy);
-		for (var i = 0; i < size; i++) {
+		for (let i = 0; i < size; i++) {
 			this.fConvPos(d[i][0], d[i][1]);
 			this.ctx.lineTo(this.iPx, this.iPy);
 		}
@@ -497,17 +546,18 @@ DrawGraph.prototype = {
 
 	fHorizontalWaves(d, size) {
 		this.fSetViewPortX(0, size);
-		var rat = this.iVye - this.iVys;
+		let rat = this.iVye - this.iVys;
 		for (i = 0; i < size; i += 2) {
-			var cc = Math.floor((d[i] - this.iVys) / rat * 256);
-			var cca = 256 - cc;
+			let cc = Math.floor((d[i] - this.iVys) / rat * 256);
+			let cca = 256 - cc;
 			if (cca < 0) cca = 0;
 			else if (cca >= 256) cca = 255;
-			var color = cca.toString(10);
-			var rgb = 'rgb(' + color + ',' + color + ',' + color + ')';
+			let color = cca.toString(10);
+			let rgb = 'rgb(' + color + ',' + color + ',' + color + ')';
 			this.ctx.strokeStyle = rgb;
 			this.fVLine(i, this.iVys, i, this.iVye);
 		}
+		this.ctx.strokeStyle = this.color;
 	},
 
 
@@ -515,16 +565,16 @@ DrawGraph.prototype = {
 	/* 点線を引く	Window 座標						*/
 	/* *******************************************	*/
 	fStrokeDottedLine: function (p1x, p1y, p2x, p2y) {
-		var d = Math.sqrt(Math.pow(p2x - p1x, 2) + Math.pow(p2y - p1y, 2));
-		var rad = Math.atan2(p2y - p1y, p2x - p1x);
-		var space = 5;
-		var dotted = Math.round(d / space / 2);
+		let d = Math.sqrt(Math.pow(p2x - p1x, 2) + Math.pow(p2y - p1y, 2));
+		let rad = Math.atan2(p2y - p1y, p2x - p1x);
+		let space = 5;
+		let dotted = Math.round(d / space / 2);
 
-		for (var i = 0; i < dotted; i++) {
-			var p3x = Math.cos(rad) * space * (i * 2) + p1x;
-			var p3y = Math.sin(rad) * space * (i * 2) + p1y;
-			var p4x = Math.cos(rad) * space * (i * 2 + 1) + p1x;
-			var p4y = Math.sin(rad) * space * (i * 2 + 1) + p1y;
+		for (let i = 0; i < dotted; i++) {
+			let p3x = Math.cos(rad) * space * (i * 2) + p1x;
+			let p3y = Math.sin(rad) * space * (i * 2) + p1y;
+			let p4x = Math.cos(rad) * space * (i * 2 + 1) + p1x;
+			let p4y = Math.sin(rad) * space * (i * 2 + 1) + p1y;
 
 			this.ctx.beginPath();
 			this.ctx.moveTo(p3x, p3y);
@@ -534,16 +584,17 @@ DrawGraph.prototype = {
 		}
 	},
 
+	/* *******************************************	*/
 	/* Viewport 座標								*/
 	/* グラフ座標系で点線を描く						*/
 
 	fVStrokeDottedLine: function (vxs, vys, vxe, vye) {
 		this.fConvPos(vxs, vys);
-		var ixs = this.iPx;
-		var iys = this.iPy;
+		let ixs = this.iPx;
+		let iys = this.iPy;
 		this.fConvPos(vxe, vye);
-		var ixe = this.iPx;
-		var iye = this.iPy;
+		let ixe = this.iPx;
+		let iye = this.iPy;
 		this.fStrokeDottedLine(ixs, iys, ixe, iye);
 	},
 
